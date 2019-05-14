@@ -1,7 +1,14 @@
 <template>
-  <div id="map">
-     正在定位
+<div>
+
+  <div class="locationBox">
+    <img src="http://static.dmall.com/kayak-project/address/dist/address/common/image/logo-slogan-new.png" alt="">
   </div>
+<div id="map">
+       正在定位
+  </div>
+</div>
+
 </template>
 <script>
 import AMap from 'AMap'
@@ -61,8 +68,12 @@ export default {
   }
 }
 </script>
-<style scoped lang="">
+<style scoped lang="scss">
 #map{
   width: 100%;height: 600px;
+}
+.locationBox {
+  @include wh(100%, 100%);
+  background: #F6F6F6;
 }
 </style>

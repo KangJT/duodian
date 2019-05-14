@@ -63,8 +63,13 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         from: path.resolve(__dirname, '../static'),
         to: config.dev.assetsSubDirectory,
         ignore: ['.*']
+      },
+    ]),
+    new webpack.LoaderOptionsPlugin({
+      vue: {
+        postcss: [require('postcss-px2rem')({remUnit: 75})]
       }
-    ])
+    })
   ]
 })
 
