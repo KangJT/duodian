@@ -13,3 +13,12 @@ export default new Router({
     }
   ]
 })
+
+// const loginPath = ['/user']
+// const gdpsPath = ['/location', '/selectlocation']
+// // 导航守卫  路由拦截
+// Router.beforeEach((to, from, next) => {
+//   if (gdpsPath.indexOf(to.path) === -1) {
+
+//   }
+// })
