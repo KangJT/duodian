@@ -43,11 +43,19 @@ export default {
 
       geolocation.getCurrentPosition()
       AMap.event.addListener(geolocation, 'complete', (data) => {
-        // resolve(data)
+        console.log(data, 'loacltionvue')
+        // const {province,building,district,street,streetNumber}=data.addressComponent
+        // this.$store.commit('user/SET_GPS', {
+        //   name: building,
+        //   address: province + district + street + streetNumber
+        //   location:data.position
+        // })
+        // console.log(data,this.$route.query.callback)
+        // this.$router.push(this.$route.query.callback)
       })
       AMap.event.addListener(geolocation, 'error', () => {
         // 失败了跳转的页面路由
-        // this.$router
+        // this.$router.push('/selectlocation')
       })
     })
   }
