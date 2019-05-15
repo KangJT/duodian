@@ -1,11 +1,10 @@
 <template>
 <div>
-
   <div class="locationBox">
     <img src="http://static.dmall.com/kayak-project/address/dist/address/common/image/logo-slogan-new.png" alt="">
   </div>
-<div id="map">
-       正在定位
+   <div id="map">
+     正在定位
   </div>
 </div>
 
@@ -62,7 +61,7 @@ export default {
       })
       AMap.event.addListener(geolocation, 'error', () => {
         // 失败了跳转的页面路由
-        // this.$router.push('/selectlocation')
+        this.$router.push('/selectlocation')
       })
     })
   }
@@ -75,5 +74,6 @@ export default {
 .locationBox {
   @include wh(100%, 100%);
   background: #F6F6F6;
+  margin-top: 30px;
 }
 </style>
