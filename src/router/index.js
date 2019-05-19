@@ -1,17 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/views/index.vue'
-import toHome from '@/views/toHome/index.vue'
-import foodType from '@/views/foodType/index.vue'
-import vipFood from '@/views/vipFood/index.vue'
-import shopCar from '@/views/shopCar/index.vue'
-import mySelf from '@/views/mySelf/index.vue'
-import Location from '@/views/location/index.vue'
-import Selectlocation from '@/views/selectlocation/index.vue'
-
 Vue.use(Router)
-
-export default new Router({
+const router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -21,57 +13,130 @@ export default new Router({
       children: [
         {
           path: '/tohome',
-          name: 'toHome',
-          component: toHome
+          name: 'Home',
+          component: () => import('@/views/Home'),
+          meta: {
+            title: '首页'
+          }
         },
         {
           path: '/foodtype',
           name: 'foodType',
-          component: foodType
+          component: () => import('@/views/foodType'),
+          meta: {
+            title: '分类'
+          }
         },
         {
           path: '/vipfood',
           name: 'vipFood',
-          component: vipFood
+          component: () => import('@/views/vipFood'),
+          meta: {
+            title: '会员'
+          }
         },
         {
           path: '/shopcar',
           name: 'shopCar',
-          component: shopCar
+          component: () => import('@/views/shopCar'),
+          meta: {
+            title: '购物车'
+          }
         },
         {
           path: '/myself',
           name: 'mySelf',
-          component: mySelf
+          component: () => import('@/views/mySelf'),
+          meta: {
+            title: '我的'
+          }
         }
       ]
     },
     {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/login'),
+      meta: {
+        title: '登录'
+      }
+    },
+    {
       path: '/location',
       name: 'Location',
-      component: Location
+      component: () => import('@/views/location'),
+      meta: {
+        title: '地图'
+      }
     },
     {
       path: '/selectlocation',
       name: 'Selectlocation',
-      component: Selectlocation
+      component: () => import('@/views/selectlocation'),
+      meta: {
+        title: '地图'
+      }
+    },
+    {
+      path: '/addaddress',
+      name: 'addaddress',
+      component: () => import('@/views/addaddress'),
+      meta: {
+        title: '添加地址地图'
+      }
     }
   ]
 })
 
-const loginPath = ['/user','/shopcar']
+// handleGetSite () {
+//   this.$message.info('正在定位')
+//   map.geolocation().then(res => {
+//     this.$store.commit('site/set_local', res.aois[0])
+//     this.$router.replace({
+//       path: this.$route.query.callback
+//     })
+//     this.show = res
+//     this.showSite = true
+//   }).catch(() => {
+//     this.$message.error('定位失败，请重试')
+//   })
+// },
+
+//  getCity (city, keyword) {
+//       map.search(city, keyword).then(res => {
+//         this.show = res
+//       })
+//     }
+
+const loginPath = ['/myself', '/shopcar', 'vipfood']
+
 const gpsPath = ['/location', '/selectlocation']
-// 导航守卫  路由拦截
-Router.beforeEach((to, from, next) => {
- //定位 判断
- if (gpsPath.indexOf(to.path) !== -1) {
-   
- } else {
-    
- }
- // if (loginPath.indexOf('token') !== -1) {
 
- // } else {
-
- // }
+// // 导航守卫  路由拦截
+router.beforeEach((to, from, next) => {
+  // 定位 判断
+  if (gpsPath.indexOf(to.path) !== -1) {
+    next()
+  } else {
+    next()
+  }
+  if (document.cookie.indexOf('token')) {
+    next()
+  } else {
+    if (loginPath.indexOf(to.name) !== -1) {
+      console.log(loginPath, 'payh')
+      next({
+        path: '/login',
+        query: {
+          callback: to.path
+        }
+      })
+    } else {
+      next()
+    }
+  }
 })
+router.afterEach((to, from, next) => {
+  document.title = to.meta.title
+})
+export default router

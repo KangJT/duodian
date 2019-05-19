@@ -1,7 +1,5 @@
 export default {
-  getItem () {
-    
-  },
+  getItem () {},
   setItem () {},
   removeItem () {},
   clear () {}

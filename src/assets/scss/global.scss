@@ -16,12 +16,116 @@
   }
 }
 
+
+
+@mixin pad($x, $y) {
+  padding: $x $y;
+  box-sizing: border-box;
+}
+
+@mixin h-center {
+  display: flex;
+  align-items: center;
+}
+
+@mixin v-center {
+  display: flex;
+  justify-content: center;
+}
+
+
+@mixin vh-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+//单行隐藏
+@mixin ell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis
+}
+
+@mixin flex {
+  display: -webkit-box; //旧语法
+  display: -webkit-flex; //新语法
+  display: flex;
+  flex-direction: column;
+}
+
+
+@mixin flexj($ju) {
+  justify-content: $ju
+}
+
+@mixin bgColor($color) {
+  background-color: $color
+}
+
+//字体溢出隐藏
+@mixin ellipsis() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: space;
+}
+
+
+//圆角 border-radius
+@mixin rounded($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+//盒子阴影 box-shadow
+@mixin shadow($x, $y, $blur, $color) {
+  -webkit-box-shadow: $x, $y, $blur, $color;
+  -moz-box-shadow: $x, $y, $blur, $color;
+  box-shadow: $x, $y, $blur, $color;
+}
+
+//内置阴影
+@mixin shadow-inset($x, $y, $blur, $color) {
+  -webkit-box-shadow: inset $x $y $blur $color;
+  -moz-box-shadow: inset $x $y $blur $color;
+  box-shadow: inset $x $y $blur $color;
+}
+
+//动画
+@mixin transition($property) {
+  -webkit-transition: $property .2s ease;
+  -moz-transition: $property .2s ease;
+  -o-transition: $property .2s ease;
+  transition: $property .2s ease;
+}
+
+
+//图片
+@mixin msgimg($imgurl) {
+  background: url($imgurl) no-repeat center center/100%;
+}
+
+
+@mixin center($hcenter,$wcenter){
+  line-height:$hcenter;
+  text-align: $wcenter;
+}
+
+
+
+
 @mixin fixedBottom() {
   position: fixed;
   left: 0;
   bottom: 0;
 }
-
+@mixin flexs {
+  display: -webkit-box; //旧语法
+  display: -webkit-flex; //新语法
+  display: flex;
+  flex-direction: column;
+}
 @mixin flex ($direction:row, $content:center, $items:center) { // inherit
   display: flex;
   justify-content: $content;
@@ -63,9 +167,9 @@
   overflow: hidden;
 }
 
-@mixin center($center) {
-  text-align: $center;
-}
+// @mixin center($center) {
+//   text-align: $center;
+// }
 
 @mixin box_flex {
   display: flex;

@@ -10,6 +10,7 @@ class Map {
       })
     })
   }
+
   geolocation () {
     return new Promise((resolve, reject) => {
       AMap.plugin('AMap.Geolocation', () => {
@@ -28,6 +29,7 @@ class Map {
       })
     })
   }
+
   search (val) {
     return new Promise((resolve) => {
       this.placeSearch.search(val, function (status, result) {
