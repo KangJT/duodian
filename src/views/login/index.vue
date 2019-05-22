@@ -22,15 +22,16 @@
         验证手机视为已阅读并同意<span class="agree">用户协议</span>
       </div>
       <div class="jrow">
-        <van-button size="large">确定</van-button>
+        <van-button size="large" @click="clickSure">确定</van-button>
       </div>
     </div>
   </div>
 </template>
-
 <script>
-import { Icon, Field, Button } from 'vant'
-import { mapActions } from 'vuex'
+// eslint-disable-next-line standard/object-curly-even-spacing
+import { Icon, Field, Button, CellGroup} from 'vant'
+// eslint-disable-next-line standard/object-curly-even-spacing
+import { mapActions, mapState, mapMutations} from 'vuex'
 export default {
   data () {
     return {
@@ -38,18 +39,30 @@ export default {
       code: '',
       btntxt: '获取验证码',
       disabled: false,
-      time: 0
+      time: 0,
+      value: ''
     }
   },
   components: {
     [Icon.name]: Icon,
     [Field.name]: Field,
-    [Button.name]: Button
+    [Button.name]: Button,
+    [CellGroup.name]: CellGroup
+  },
+  computed: {
+    ...mapState({
+      msgCode: state => state.user.msgCode
+    })
   },
   methods: {
+    ...mapMutations({
+      updateState: 'user/updateState'
+    }),
     ...mapActions({
+      getMsgCode: 'user/getMsgCode',
       getLogin: 'user/getLogin'
     }),
+    // 发送验证码
     sendCode () {
       var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/
       if (this.moblie === '') {
@@ -61,9 +74,9 @@ export default {
         this.disabled = true
         // 验证码的时间设置 可有可无
         this.timer()
-        // 手机号争取后调取接口
-        this.getLogin({
-          user_phone: this.moblie
+        // 接口 验证码
+        this.getMsgCode({
+          phone: this.moblie
         })
       }
     },
@@ -78,6 +91,15 @@ export default {
         this.btntxt = '获取验证码'
         this.disabled = false
       }
+    },
+    // 点击确定按钮
+    clickSure () {
+      this.getLogin({
+        phone: this.moblie,
+        code: this.code
+      }).then(res => {
+        console.log(res, 1111)
+      })
     }
   }
 }

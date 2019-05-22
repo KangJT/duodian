@@ -21,5 +21,18 @@ export default {
 #app {
   color: #2c3e50;
 }
-
+.info{
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  /* border:1px solid red; */
+  background: red;
+  position: absolute;
+  bottom: 65px;
+  right: 23%;
+  color: #fff;
+  display: block;
+  border-radius:50%;
+}
 </style>

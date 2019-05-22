@@ -1,68 +1,55 @@
 <template>
   <div class="tabs">
-    <Sticky :top="0">
-    <header class="tabs-header">
-      <nav ref="navitem">
-        <a
-          v-for="(item, index) in menu"
-          :key="index"
-          :class="{active: index === activeIndex}"
-          @click="change(index)"
-          href="javascript:;"
-        >
-          {{item}}
-        </a>
-      </nav>
-      <b class="line" :style="styles"></b>
-    </header>
-    </Sticky>
-    <div class="content">
-      <slot></slot>
-    </div>
+      <!-- <Sticky :top="0"> -->
+        <header class="tabs-header">
+          <nav>
+            <ul class="table">
+              <li v-for="(item,index) in menu"
+                  :key="index"
+                  :class="{active:index===activeIndex}"
+                  @click="change(index)"
+                  href="javascript:;">{{item}}</li>
+            </ul>
+          </nav>
+        </header>
+      <!-- </Sticky> -->
+    <!-- <scrollView @scroll="getScroll" :flg="scrollFlg"> -->
+      <div class="content">
+        <slot></slot>
+      </div>
+    <!-- </scrollView> -->
   </div>
 </template>
-
 <script>
 export default {
   name: 'Tabs',
   components: {
+
+  },
+  data () {
+    return {
+      menu: [],
+      activeIndex: 0,
+      scrollFlg: true,
+      params: {
+        limit: 6, // 条数
+        offset: 0, // 开始值
+        type_id: 2 // 1多点 2.全球
+      }
+    }
   },
   props: {
-    defaultActive: {
+    defaultActive: {// 默认的第一份插槽
       type: Number,
       default: 0
     }
   },
-  data () {
-    return {
-      activeIndex: 0,
-      menu: []
-    }
-  },
-  mounted () {
-    this.$children = this.$children.filter((child) => {
-      return child.$vnode.tag.indexOf('TabPane') !== -1
-    })
-    this.initMenu()
-  },
-  computed: {
-    // 样式横线
-    styles () {
-      const width = window.innerWidth / this.menu.length
-      return {
-        left: width * this.activeIndex + (width * 0.5 / 2) + 'px',
-        width: width * 0.5 + 'px'
-      }
-    }
-  },
   methods: {
-    // 找到所对应的显示
     initMenu () {
       this.menu = this.$children.map(child => child.label)
-      this.$children[this.activeIndex].isShow = true
+      this.$children[this.activeIndex].isShow = true// 默认的第一份插槽
     },
     change (index) {
-      // 通过下标改变样式
       this.activeIndex = index
       this.$children.forEach((child, i) => {
         if (index === i) {
@@ -71,42 +58,79 @@ export default {
           this.$children[i].isShow = false
         }
       })
-      this.$emit('change', index)
+      this.$emit('change', index)// 传给父组件下标 从而请求数据
+    },
+    getData (params) {
+      console.log(this.$api)
+      this.$api.article
+        .list({
+          params: params
+        })
+        .then(data => {
+          if (params.offset === 0) {
+            this.data = data
+          } else {
+            this.data = this.data.concat(data)
+          }
+          this.scrollFlg = true
+        })
+    },
+    getScroll () {
+      this.scrollFlg = false
+      this.params.offset += 1
+      this.params.limit += 6
+      this.getData(this.params)
     }
+  },
+  created () {
+  },
+  mounted () {
+    this.initMenu()
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.tabs {
-  @include wh(100%, auto);
-  .tabs-header {
-    @include wh(100%, 88px);
-    background: #fff;
-    display: flex;
-    position: relative;
-    nav {
-      width: 100%;
-      line-height: 88px;
-      display: flex;
-      >a {
-        flex: 1;
-        font-size: 28px;
-        text-align: center;
-        color: $link-default-color;
-        &.active {
-          color:$color-warning;
-        }
+<style scoped lang="scss">
+.tabs{
+  @include wh(100%,auto);
+  position: sticky;
+  top:0;
+  .tabs-header{
+  @include wh(100%,88px);
+    nav{
+    @include box_flex();
+    line-height:88px;
+    a{
+      flex: 1;
+      font-size: 14px;
+      text-align: center;
+      color: $color-text-primary;
+      &.active{
+        color:  $color-base
       }
-    }
-    .line {
-      @include wh(auto, 2px);
-      background:$color-warning;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      transition: left .5s ease;
+     }
     }
   }
+}
+.table{
+    // border-bottom:1px solid #dddddd;
+    width: 50%;
+    height: 80px;
+    //background: #ffffff;
+    display: flex;
+    line-height: 80px;
+    position: sticky;
+    top: 0;
+    li{
+        width: 100px;;
+        height:80px;
+        text-align: center;
+        margin: 0 20px;
+        flex: 1;
+        font-size: 12px;
+    }
+    .active{
+       border-bottom:2px solid red;
+       padding: 0
+    }
 }
 </style>

@@ -84,6 +84,14 @@ const router = new Router({
       meta: {
         title: '添加地址地图'
       }
+    },
+    {
+      path: '/okodder',
+      name: 'okodder',
+      component: () => import('@/views/okodder'),
+      meta: {
+        title: '确定订单'
+      }
     }
   ]
 })

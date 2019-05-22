@@ -1,20 +1,14 @@
 <template>
 <div class="banner">
-  <swiper>
-    <!-- :options="swiperOption"
+  <swiper
     class="swiper-wrap"
-    ref="mySwiper"
-    v-if="banner.length!=0"> -->
+    ref="mySwiper">
   <swiper-slide v-for="(item,index) in banner" :key="index" >
     <img :src="item.image" alt="" />
   </swiper-slide>
   <!-- 常见的小圆点 -->
   <div class="swiper-pagination"  v-for="(item,index) in banner" :key="index" slot="pagination" ></div>
   </swiper>
-  <!-- 显示数字 -->
-  <!-- <div class="number">
-    {{imgIndex}}/{{detailimages.length}}
-  </div> -->
 </div>
 </template>
 <script>

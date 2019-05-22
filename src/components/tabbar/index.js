@@ -1,6 +1,6 @@
 
-import Tabs from './tabs.vue'
-import TabPane from './tab-pane.vue'
+import Tabs from './tabs'
+import TabPane from './tab-pane'
 
 export {
   Tabs,

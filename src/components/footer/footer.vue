@@ -1,5 +1,6 @@
 <template>
-  <ul class="footerBox">
+<div>
+ <ul class="footerBox">
     <li
      :class="index === nowCheck?'checked':''"
      :to="item.url"
@@ -11,6 +12,9 @@
       <span class="footerText">{{item.name}}</span>
     </li>
   </ul>
+   <span class="info">232</span>
+</div>
+
 </template>
 <script>
 export default {

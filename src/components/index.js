@@ -4,7 +4,11 @@ import SearchAddress from './searchAddress'
 import ResultList from './resultList'
 import AnimationLoding from './animationLoding'
 import Banner from './banners'
-import Tabbar from './tabbar'
+import {Tabs, TabPane} from './tabbar/index'
+import Sticky from './sticky'
+import {List, ListItem} from './list/index.js'
+import ArtileList from './artileList/index'
+import ScrollView from './scroll-view/index'
 let components = {
   Footers,
   ReturnTop,
@@ -12,7 +16,13 @@ let components = {
   ResultList,
   AnimationLoding,
   Banner,
-  Tabbar
+  Tabs,
+  TabPane,
+  Sticky,
+  List,
+  ListItem,
+  ArtileList,
+  ScrollView
 }
 
 export default {
